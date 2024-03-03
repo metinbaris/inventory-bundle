@@ -10,14 +10,14 @@ use MetinBaris\InventoryBundle\DependencyInjection\Compiler\RegisterConsoleComma
 
 class InventoryBundle extends Bundle
 {
-    public function boot()
+    public function boot(): void
     {
         parent::boot();
 
         App::init();
     }
 
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         parent::build($container);
 

@@ -15,12 +15,12 @@ class ReadInventoryCommand extends Command
     {
         $this->setName(self::$defaultName)
             ->setDescription('Reads inventory data from given CSV file.')
-            ->addArgument('stockCsvDirectory', InputArgument::REQUIRED, 'Path to the stock CSV directory');
+            ->addArgument('path', InputArgument::REQUIRED, 'Path to the stock CSV file');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $stockCsvDirectory = $input->getArgument('stockCsvDirectory');
+        $csvFilePath = $input->getArgument('path');
 
         // TODO command logic here, given path read CSV
         return Command::SUCCESS;
