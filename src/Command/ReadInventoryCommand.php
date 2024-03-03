@@ -2,6 +2,7 @@
 
 namespace MetinBaris\InventoryBundle\Command;
 
+use MetinBaris\InventoryBundle\Service\InventoryCsvService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -22,7 +23,14 @@ class ReadInventoryCommand extends Command
     {
         $csvFilePath = $input->getArgument('path');
 
-        // TODO command logic here, given path read CSV
-        return Command::SUCCESS;
+        $inventoryCsvService = new InventoryCsvService();
+        try {
+            $inventoryCsvService->update($csvFilePath);
+            $output->writeln('<info>Successfuly updated</info>');
+            return Command::SUCCESS;
+        } catch (\Exception $e) {
+            $output->writeln("<error>{$e->getMessage()}</error>");
+            return Command::FAILURE;
+        }
     }
 }
