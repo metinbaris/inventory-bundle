@@ -1,4 +1,4 @@
-id,name,quantity
+id,sku,quantity
 1,ProductA,25
 2,ProductB,18
 3,ProductC,12
