@@ -2,10 +2,9 @@
 
 namespace MetinBaris\InventoryBundle\Entity;
 
-use MetinBaris\InventoryBundle\Repository\StocksRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: StocksRepository::class)]
+#[ORM\Entity()]
 class Stocks
 {
     #[ORM\Id]
@@ -13,8 +12,8 @@ class Stocks
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    #[ORM\Column(length: 255, unique: true)]
+    private ?string $sku = null;
 
     #[ORM\Column]
     private ?int $quantity = null;
@@ -31,14 +30,14 @@ class Stocks
         return $this;
     }
 
-    public function getName(): ?string
+    public function getSku(): ?string
     {
-        return $this->name;
+        return $this->sku;
     }
 
-    public function setName(string $name): static
+    public function setSku(string $sku): static
     {
-        $this->name = $name;
+        $this->sku = $sku;
 
         return $this;
     }
