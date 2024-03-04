@@ -1,0 +1,32 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+        
+    MetinBaris\InventoryBundle\Command\ReadInventoryCommand:
+        arguments:
+            $inventoryCsvService: '@MetinBaris\InventoryBundle\Service\InventoryCsvService'
+        tags:
+            - { name: 'console.command' }
+
+    MetinBaris\InventoryBundle\Service\InventoryCsvService:
+        arguments:
+            $entityManager: '@doctrine.orm.entity_manager'
+
+    MetinBaris\InventoryBundle\Controller\InventoryController:
+        arguments:
+            $entityManager: '@doctrine.orm.entity_manager'
+        tags:
+            - { name: 'controller.service_arguments' }
+        public: true
+
+doctrine:
+    orm:
+        mappings:
+            InventoryBundle:
+                is_bundle: true
+                type: attribute
+                dir: 'Entity'
+                prefix: 'MetinBaris\InventoryBundle\Entity'
+                alias: InventoryBundle
