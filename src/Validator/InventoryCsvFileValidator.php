@@ -11,9 +11,9 @@ class InventoryCsvFileValidator
             return $handle;
         }
 
-        $validNull = $this->checkValid($handle);
-        
-        return $validNull;
+        $valid = $this->checkValid($handle);
+
+        return $valid;
     }
 
     private function openFile(string $csvFilePath)
@@ -38,12 +38,12 @@ class InventoryCsvFileValidator
         return $handle;
     }
 
-    private function checkValid($handle)
+    private function checkValid($handle): ?string
     {
         $headers = fgetcsv($handle);
 
         // Check if the headers match the expected headers
-        $expectedHeaders = ['id', 'name', 'quantity'];
+        $expectedHeaders = ['id', 'sku', 'quantity'];
         if ($headers !== $expectedHeaders) {
             fclose($handle);
             return 'Error: Invalid CSV file headers.';
@@ -63,6 +63,8 @@ class InventoryCsvFileValidator
                 return 'Error: Invalid data types in the CSV file.';
             }
         }
+
+        fclose($handle);
 
         return null;
     }
