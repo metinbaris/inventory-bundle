@@ -27,3 +27,10 @@ In the doctrine.yaml configuration file, under the orm section's mappings, synch
             prefix: App\Entity
             alias: App
 ```
+
+Next add this line to your services.yaml file under services:
+
+```
+    MetinBaris\InventoryBundle\Command\ReadInventoryCommand:
+        tags: ['console.command']
+```
