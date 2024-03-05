@@ -19,3 +19,6 @@ DATABASE_URL={mysql_connection}
 ```
 php bin/console metinbaris:read-inventory "{path_to_your_csv}/example.csv"
 ```
+
+### List of stocks route:
+/index
