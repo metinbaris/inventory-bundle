@@ -22,3 +22,5 @@ php bin/console metinbaris:read-inventory "{path_to_your_csv}/example.csv"
 
 ### List of stocks route:
 /index
+
+![alt text](https://github.com/metinbaris/inventory-bundle/blob/main/screenshot.png?raw=true)
