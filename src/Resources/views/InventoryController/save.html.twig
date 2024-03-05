@@ -2,11 +2,19 @@
     <legend>Product Form</legend>
     <form method="post" action="{{ path('save_product') }}">
         <label for="sku">SKU:</label>
-        <input type="text" id="sku" name="sku" required autocomplete="off">
+        <input type="text" id="sku" name="sku" autocomplete="off" required>
 
         <label for="quantity">Quantity:</label>
-        <input type="number" id="quantity" name="quantity" min="0" autocomplete="off" required>
+        <input type="number" id="quantity" name="quantity" autocomplete="off" required>
 
         <button type="submit">Save</button>
     </form>
+
+    {% for message in app.flashes('success') %}
+        <ins>{{ message }}</ins>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <ins style="color:#A30000;">{{ message }}</ins>
+    {% endfor %}
+
 </fieldset>

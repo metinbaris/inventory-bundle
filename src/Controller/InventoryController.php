@@ -5,6 +5,7 @@ namespace MetinBaris\InventoryBundle\Controller;
 use Doctrine\ORM\EntityManagerInterface;
 use MetinBaris\InventoryBundle\Entity\Stocks;
 use MetinBaris\InventoryBundle\Service\InventoryProcessor;
+use MetinBaris\InventoryBundle\Validator\InventoryFormSaveValidator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,10 +15,16 @@ class InventoryController extends AbstractController
 {
     private $entityManager;
     private $inventoryProcessor;
-    public function __construct(EntityManagerInterface $entityManager, InventoryProcessor $inventoryProcessor)
+    private $inventoryFormSaveValidator;
+    public function __construct(
+        EntityManagerInterface $entityManager, 
+        InventoryProcessor $inventoryProcessor,
+        InventoryFormSaveValidator $inventoryFormSaveValidator
+    )
     {
         $this->entityManager = $entityManager;
         $this->inventoryProcessor = $inventoryProcessor;
+        $this->inventoryFormSaveValidator = $inventoryFormSaveValidator;
     }
 
     #[Route('/index', 'index_route')]
@@ -37,15 +44,22 @@ class InventoryController extends AbstractController
         $quantity = $request->request->get('quantity');
 
         if ($request->isMethod('POST')) {
+            $valid = $this->inventoryFormSaveValidator->validate($sku, $quantity);
+            if (!empty($valid)) {
+                $this->addFlash('error', $valid);
+                return $this->redirectToRoute('index_route');
+            }
 
             $existingStock = $this->entityManager->getRepository(Stocks::class)->findOneBy(['sku' => $sku]);
             if ($existingStock) {
                 $existingStock->setQuantity($quantity);
                 $stock = $existingStock;
+                $this->addFlash('success', "Product Updated");
             } else {
                 $stock = new Stocks();
                 $stock->setSku($sku);
                 $stock->setQuantity($quantity);
+                $this->addFlash('success', "Product Created");
             }
 
             $this->entityManager->persist($stock);

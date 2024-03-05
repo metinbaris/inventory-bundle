@@ -19,10 +19,15 @@ services:
             $entityManager: '@doctrine.orm.entity_manager'
             $bus: '@messenger.default_bus'
 
+    MetinBaris\InventoryBundle\Validator\InventoryFormSaveValidator:
+        class: MetinBaris\InventoryBundle\Validator\InventoryFormSaveValidator
+        arguments: []
+
     MetinBaris\InventoryBundle\Controller\InventoryController:
         arguments:
             $entityManager: '@doctrine.orm.entity_manager'
             $inventoryProcessor: '@MetinBaris\InventoryBundle\Service\InventoryProcessor'
+            $inventoryFormSaveValidator: '@MetinBaris\InventoryBundle\Validator\InventoryFormSaveValidator'
         tags:
             - { name: 'controller.service_arguments' }
         public: true
