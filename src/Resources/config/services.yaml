@@ -14,12 +14,24 @@ services:
         arguments:
             $entityManager: '@doctrine.orm.entity_manager'
 
+    MetinBaris\InventoryBundle\Service\InventoryProcessor:
+        arguments:
+            $entityManager: '@doctrine.orm.entity_manager'
+            $bus: '@messenger.default_bus'
+
     MetinBaris\InventoryBundle\Controller\InventoryController:
         arguments:
             $entityManager: '@doctrine.orm.entity_manager'
+            $inventoryProcessor: '@MetinBaris\InventoryBundle\Service\InventoryProcessor'
         tags:
             - { name: 'controller.service_arguments' }
         public: true
+
+    MetinBaris\InventoryBundle\MessageHandler\InventoryOutOfStockMessageHandler:
+        tags:
+            - { name: messenger.message_handler, method: __invoke, bus: messenger.bus.default }
+        arguments:
+            $mailer: '@mailer'
 
 doctrine:
     orm:

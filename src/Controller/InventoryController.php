@@ -4,6 +4,7 @@ namespace MetinBaris\InventoryBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
 use MetinBaris\InventoryBundle\Entity\Stocks;
+use MetinBaris\InventoryBundle\Service\InventoryProcessor;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,9 +13,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class InventoryController extends AbstractController
 {
     private $entityManager;
-    public function __construct(EntityManagerInterface $entityManager)
+    private $inventoryProcessor;
+    public function __construct(EntityManagerInterface $entityManager, InventoryProcessor $inventoryProcessor)
     {
         $this->entityManager = $entityManager;
+        $this->inventoryProcessor = $inventoryProcessor;
     }
 
     #[Route('/index', 'index_route')]
@@ -46,8 +49,11 @@ class InventoryController extends AbstractController
             }
 
             $this->entityManager->persist($stock);
-            $this->entityManager->flush();
 
+            // Mail out of stock
+            $this->inventoryProcessor->processStock($stock);
+
+            $this->entityManager->flush();
             return $this->redirectToRoute('index_route');
         }
 
