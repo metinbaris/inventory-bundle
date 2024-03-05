@@ -1,37 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock List</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
-</head>
-<body>
+{% extends '@Inventory/base.html.twig' %}
 
-    <main class="container">
-    
-        <h1>Stock List</h1>
+{% block title %}Stock List{% endblock %}
 
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>SKU</th>
-                    <th>Quantity</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for stock in stocks %}
+{% block content %}
+    <h1 class="container">Stock List</h1>
+
+    <main class="container" style="display:flex; gap: 4%">
+
+        <section style="flex: 2; max-height: 70vh; overflow-y: auto;">
+            <table>
+                <thead>
                     <tr>
-                        <td>{{ stock.id }}</td>
-                        <td>{{ stock.sku }}</td>
-                        <td>{{ stock.quantity }}</td>
+                        <th>ID</th>
+                        <th>SKU</th>
+                        <th>Quantity</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {% for stock in stocks %}
+                        <tr>
+                            <td>{{ stock.id }}</td>
+                            <td>{{ stock.sku }}</td>
+                            <td>{{ stock.quantity }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
 
+        <section>
+            {% include '@Inventory/InventoryController/create.html.twig'%}
+        </section>
     </main>
 
-</body>
-</html>
+{% endblock %}
