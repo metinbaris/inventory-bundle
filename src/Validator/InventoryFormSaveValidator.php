@@ -10,6 +10,10 @@ class InventoryFormSaveValidator
             return 'SKU field is required';
         }
 
+        if ($quantity === "") {
+            return 'Quantity field is required';
+        }
+
         if (!ctype_digit($quantity) && $quantity !== '0') {
             return 'Quantity should be a positive integer';
         }
