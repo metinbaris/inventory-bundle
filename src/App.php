@@ -6,8 +6,11 @@ use Doctrine\DBAL\DriverManager;
 
 class App
 {
+    const CONSTANT_EXPECTED_ENV_VARIABLES = ['INVENTORY_MAIL', 'MAILER_DSN', 'DATABASE_URL'];
+
     public static function init()
     {
+        self::checkEnvironmentVariables();
         self::checkDBConnection();
     }
 
@@ -27,6 +30,15 @@ class App
             die;
         }
 
-        $connection->getWrappedConnection();
+        $connection->getNativeConnection();
+    }
+
+    private static function checkEnvironmentVariables()
+    {
+        foreach (self::CONSTANT_EXPECTED_ENV_VARIABLES as $var) {
+            if (!isset($_ENV[$var])) {
+                throw new \Exception("Your .env file is missing: \"$var\" please assign a value");
+            }
+        }
     }
 }
