@@ -1,6 +1,6 @@
 {
     "name": "metinbaris/inventory-bundle",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Updates your Symfony apps MYSQL database with a given CSV file",
     "license": "proprietary",
     "minimum-stability": "dev",
