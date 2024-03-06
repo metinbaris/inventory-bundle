@@ -31,6 +31,11 @@ To upload csv, from your main symfony project root directory run
 php bin/console metinbaris:read-inventory "{path_to_your_csv}/example.csv"
 ```
 
+Be sure that Symfony Messenger worker is running for out of stock email for updates
+```
+php bin/console messenger:consume async
+```
+
 ### List of stocks route:
 /index
 
