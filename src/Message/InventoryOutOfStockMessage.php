@@ -1,4 +1,5 @@
 <?php
+
 namespace MetinBaris\InventoryBundle\Message;
 
 use MetinBaris\InventoryBundle\Entity\Stocks;

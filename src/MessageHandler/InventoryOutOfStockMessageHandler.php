@@ -19,13 +19,13 @@ class InventoryOutOfStockMessageHandler
 
     public function __invoke(InventoryOutOfStockMessage $message)
     {
-        $skock = $message->getStock();
-        
+        $stock = $message->getStock();
+
         $email = (new Email())
             ->from($_ENV['INVENTORY_MAIL'])
             ->to($_ENV['INVENTORY_MAIL'])
             ->subject('Product Out of Stock')
-            ->text("Product {$skock->getSku()} is now out of stock at a particular location.\nID: {$skock->getId()}");
+            ->text("Product {$stock->getSku()} is now out of stock at a particular location.\nID: {$stock->getId()}");
 
         $this->mailer->send($email);
     }

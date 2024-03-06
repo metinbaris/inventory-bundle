@@ -16,12 +16,12 @@ class InventoryController extends AbstractController
     private $entityManager;
     private $inventoryProcessor;
     private $inventoryFormSaveValidator;
+
     public function __construct(
-        EntityManagerInterface $entityManager, 
+        EntityManagerInterface $entityManager,
         InventoryProcessor $inventoryProcessor,
         InventoryFormSaveValidator $inventoryFormSaveValidator
-    )
-    {
+    ) {
         $this->entityManager = $entityManager;
         $this->inventoryProcessor = $inventoryProcessor;
         $this->inventoryFormSaveValidator = $inventoryFormSaveValidator;
